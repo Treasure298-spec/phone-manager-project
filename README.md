@@ -9,58 +9,45 @@
 
 ## Application Function
 
-> **Scope:** what your app does for the *user* — its features and how someone uses it. (Keep code structure for *Application Architecture* and UI design for *JavaFX*.)
-
-Discuss, in detail, what the application does. Add a screenshot of the application **in use** (note: this is a *different* image to the architecture screenshot further down). 
+Phone Manager lets a user mainteain a list of phones, each uniquely identified by an imei, that users can add a new phone (imei, brand, model, year, price), delete a phone by IMEI, search for a phone by exact imei or by partial brand/model, view the total number of phones and their combined value, and save or reload the entire list from a file so data persists between sessions. All 7 core operations are accessible as buttons on the right-hand side of the GUI: Load DB, Add Item, Delete Item, Find Item, Show Total, Save to DB, and Quit.
+![Phone Manager app showing a saved phone list](images/image-2.png)
+![Phone Manager showing search results](images/image-3.png)
 
 ## Running the Application
-
-Provide step by step instructions on how to run your application. Are there any software installs required? 
-
-For example:
-
-1. Open the repository in **GitHub Codespaces**.
-2. Open the `Main` class.
-3. Click the **Run** icon in the top-right corner.
-4. *(add any further steps, and note any software that must be installed)*
+1. Open the repository in GitHub Codespaces.
+2. Wait for the devcontainer to finish building.
+3. Open Main.java (src/ie/atu/mypackage/Main.java).
+4. Click "Run and Debug" in the sidebar or run it from the terminal.
+5. Open the forwarded port (noVNC virtual desktop) shown in the Ports tab to view the running application window.
+No manual installs are required.
 
 ## Project Requirements
-
-All requirements live in **one place** — the [**project brief**](project-brief.md). 
-
-See: 
-1. Minimum Project Requirements 
-2. Minimum Feature Requirements
-3. Coding Standards
-
-Make sure you have met every one and documented everything here before you submit.
+-  Three classes: Main, Phone, PhoneManager
+-  ArrayList<Phone> used in PhoneManager
+- Add, remove, serialize, deserialize, total, and search      implemented in PhoneManager
+- Stream API + lambda used in removePhone, findByImei, findByBrandOrModel, getTotalValue, sortByBrand, sortByYear
+-  File I/O with try-with-resources and exception handling in saveToFile/loadFromFile
+-  Serialization to resources/phones.ser
+-  JavaFX GUI in Main with all 7 required operations as buttons.
 
 ## Project Requirements Above and Beyond
 
-Discuss any application features or design elements that show you went above and beyond the basic requirements.
-
+Beyond the minimum requirements, PhoneManager includes extra methods researched independently: sortByBrand() and sortByYear(), and getTotalValue() which sums prices using the Stream API. The app also exports a human-readable CSV file (resources/phones.csv) alongside the serialized .ser save, giving two forms of persistence. Input validation and exception handling prevent crashes from invalid numbers or missing files.
 ## Application Architecture
 
-> **Scope:** the *code* — your classes, their methods, and the data structure(s) (e.g. the `ArrayList`) used to store your objects. (Keep user-facing features for *Application Function* and UI design for *JavaFX*.)
+The application is built around three classes. Phone is a serializable data class representing a single phone, with IMEI treated as its unique identifier (used in equals/hashCode). PhoneManager owns an ArrayList<Phone> and provides all logic: adding, removing (removeIf with a lambda), searching (stream().filter(...)), totalling, sorting, and file I/O — serialization to .ser and a CSV export via the Stream API. Main is the JavaFX entry point; it builds the GUI and have  the 7 buttons to a PhoneManager method.
 
-Discuss in detail how the application is structured. List all classes. List their methods and what they do. Discuss what structures are used to store data objects.
-
-Add a screenshot or diagram of the application architecture, e.g. a class diagram (a *different* image to the in-use screenshot above).
 
 ## JavaFX
 
-> **Scope:** the *UI design* — layout, navigation, styling, and why you chose them. (Keep what the app does for *Application Function* and the code structure for *Application Architecture*.)
+The GUI uses a BorderPane layout: the input form (imei, Brand, Model, Year, Price, Search) sits at the top, a TableView displaying all phones sits in the center, the 7 action buttons are grouped vertically on the right, and a status bar along the bottom shows feedback after every action. A TableView was chosen over a plain list so multiple phone attributes are visible at once, and grouping the buttons together on one side keeps the core actions easy to find and separate from the input form.
 
-Discuss the GUI design used. Discuss why you chose this design and any features you think make your application stand out.
-
-![alt text](images/javaFX.gif "My App")
 
 ## Roadblocks and Unfinished Functionality
+I struggled a bit with the coding part — there was a lot of trial and error, and a lot of mistakes along the way. I watched several YouTube videos to help me understand it; some were useful, others weren't, but in the end I got through it.
 
-Discuss the issues you faced with creating your application. Provide possible solutions to these issues. What would you have done differently if you had to do this again? What did you not get finished?
 
 ## Resources
 
-Provide links to resources used:
-
-* [Tutorialspoint](https://www.tutorialspoint.com/java/) - Java Tutorials site I found helpful
+* Oracle Java Documentation - https://docs.oracle.com/en/java/
+* JavaFX Documentation - https://openjfx.io/
