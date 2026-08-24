@@ -13,11 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Manages a collection of Phone objects.
- * Responsible for adding, removing, searching, totalling, and
- * saving/loading the collection to and from disk.
- */
+
 public class PhoneManager {
 
     private ArrayList<Phone> phones = new ArrayList<>();
